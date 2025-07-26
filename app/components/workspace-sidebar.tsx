@@ -1,15 +1,12 @@
-import { Button } from "@yz13/ui/button";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@yz13/ui/sidebar";
 import { HistoryIcon, StarIcon, StickyNoteIcon, TagIcon, WifiIcon } from "lucide-react";
+import User from "./user";
 
 export default function () {
   return (
     <Sidebar variant="sidebar" collapsible="icon">
       <SidebarHeader>
-        <div className="flex items-center justify-between">
-          <div className="size-9 rounded-full bg-secondary border"></div>
-          <Button variant="secondary">Войти</Button>
-        </div>
+        <User />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
