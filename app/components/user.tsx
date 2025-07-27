@@ -1,4 +1,4 @@
-import useUser from "@/hooks/use-user"
+import { useUser } from "@/hooks/use-user"
 import { postV1AuthLogout } from "@yz13/api"
 import { Avatar, AvatarFallback, AvatarImage } from "@yz13/ui/avatar"
 import { Button } from "@yz13/ui/button"

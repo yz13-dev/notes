@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export type User = GetV1UsersUid200
 
-export default function (): [User | null, boolean, () => Promise<void>] {
+export const useUser = (): [User | null, boolean, () => Promise<void>] => {
 
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(false)

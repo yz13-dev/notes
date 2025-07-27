@@ -1,41 +1,21 @@
 import AppSidebar from "@/components/app-sidebar";
-import { getV1AuthMe, getV1Workspaces } from "@yz13/api";
+import { useWorkspaces } from "@/hooks/use-workspaces";
+import { Badge } from "@yz13/ui/badge";
+import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
 import { SidebarProvider } from "@yz13/ui/sidebar";
 import { cn } from "@yz13/ui/utils";
-import { PlusIcon, SearchIcon, TagIcon } from "lucide-react";
-import { useLoaderData } from "react-router";
+import { ArrowRightIcon, EyeIcon, EyeOffIcon, PlusIcon, SearchIcon, TagIcon } from "lucide-react";
+import { Link } from "react-router";
 
-export const loader = async () => {
-  try {
-    const me = await getV1AuthMe()
-    if (!me) return {
-      workspaces: []
-    }
-
-    const uid = me.id
-
-
-    const workspaces = await getV1Workspaces({ uid })
-
-    return {
-      workspaces
-    }
-  } catch (e) {
-    console.log(e)
-    return {
-      workspaces: []
-    }
-  }
-}
 
 export default function () {
-  const { workspaces } = useLoaderData<typeof loader>()
-  console.log(workspaces)
+  const [workspaces, loading] = useWorkspaces()
+
   return (
     <SidebarProvider>
       <AppSidebar />
-      <div className="w-[calc(100%-var(--sidebar-width))] h-dvh">
+      <div className="md:w-[calc(100%-var(--sidebar-width))] w-full h-dvh">
         <div className="max-w-lg w-full mx-auto">
           <div className="w-full py-6">
             <div className="w-full relative flex items-center h-10">
@@ -68,8 +48,34 @@ export default function () {
 
             {
               workspaces.map(workspace => {
+
+                const name = workspace.name ?? "Неизвестно";
+                const description = workspace.description ?? "Без описания";
+                const isPublic = workspace.public ?? false;
+
                 return (
-                  <div key={workspace.id} className="w-full rounded-lg h-32 bg-secondary"></div>
+                  <div key={workspace.id} className="w-full rounded-3xl h-fit border">
+                    <div className="w-full p-3">
+                      <Badge variant="secondary">
+                        {isPublic ? <EyeIcon /> : <EyeOffIcon />}
+                        <span>{isPublic ? "Публичная" : "Приватная"}</span>
+                      </Badge>
+                    </div>
+                    <div className="w-full px-3 pb-3 h-full">
+                      <div className="w-full *:block space-y-1">
+                        <span className="text-2xl font-medium">{name}</span>
+                        <span className="text-base text-muted-foreground">{description}</span>
+                      </div>
+                    </div>
+
+                    <div className="p-3 flex items-center justify-end">
+                      <Button asChild variant="secondary">
+                        <Link to={`/workspace/${workspace.id}`}>
+                          Открыть <ArrowRightIcon />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
                 )
               })
             }
