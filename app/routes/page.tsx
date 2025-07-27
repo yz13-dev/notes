@@ -1,13 +1,37 @@
 import AppSidebar from "@/components/app-sidebar";
+import { getV1AuthMe, getV1Workspaces } from "@yz13/api";
 import { Input } from "@yz13/ui/input";
 import { SidebarProvider } from "@yz13/ui/sidebar";
 import { cn } from "@yz13/ui/utils";
 import { PlusIcon, SearchIcon, TagIcon } from "lucide-react";
+import { useLoaderData } from "react-router";
+
+export const loader = async () => {
+  try {
+    const me = await getV1AuthMe()
+    if (!me) return {
+      workspaces: []
+    }
+
+    const uid = me.id
 
 
+    const workspaces = await getV1Workspaces({ uid })
 
+    return {
+      workspaces
+    }
+  } catch (e) {
+    console.log(e)
+    return {
+      workspaces: []
+    }
+  }
+}
 
 export default function () {
+  const { workspaces } = useLoaderData<typeof loader>()
+  console.log(workspaces)
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -42,9 +66,13 @@ export default function () {
           </div>
           <div className="py-6 space-y-4">
 
-            <div className="w-full rounded-lg h-32 bg-secondary"></div>
-            <div className="w-full rounded-lg h-32 bg-secondary"></div>
-            <div className="w-full rounded-lg h-32 bg-secondary"></div>
+            {
+              workspaces.map(workspace => {
+                return (
+                  <div key={workspace.id} className="w-full rounded-lg h-32 bg-secondary"></div>
+                )
+              })
+            }
 
           </div>
         </div>

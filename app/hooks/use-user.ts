@@ -4,17 +4,25 @@ import { useEffect, useState } from "react";
 
 export type User = GetV1UsersUid200
 
-export default function (): [User | null, boolean] {
+export default function (): [User | null, boolean, () => Promise<void>] {
 
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
 
+  const refresh = async () => {
+    setLoading(true)
+    try {
+      const user = await getV1AuthMe()
+      setUser(user)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    setLoading(true)
-    getV1AuthMe()
-      .then(user => setUser(user))
-      .finally(() => setLoading(false))
+    refresh()
   }, [])
-  return [user, loading]
+  return [user, loading, refresh]
 }
