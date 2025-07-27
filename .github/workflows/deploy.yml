@@ -6,9 +6,9 @@ on:
       - main
 
 env:
-  IMAGE_NAME: notes-yz13
+  IMAGE_NAME: yz13-notes
   IMAGE_TAG: latest
-  CONTAINER_NAME: yz13-notes
+  CONTAINER_NAME: notes-yz13
 
 jobs:
   deploy:
