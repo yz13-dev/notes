@@ -1,6 +1,7 @@
 import { useNote } from "@/hooks/use-note";
 import { useWorkspace } from "@/hooks/use-workspace";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@yz13/ui/breadcrumb";
+import { Skeleton } from "@yz13/ui/skeleton";
 import { Link } from "react-router";
 
 
@@ -46,6 +47,7 @@ export const WorkspaceBreadCrumb = ({ workspaceId, asLink = false }: { workspace
 
   const name = workspace?.name ?? "Без названия";
 
+  if (loading) return <Skeleton className="w-32 h-5" />
   if (asLink) {
     return (
       <BreadcrumbItem>
@@ -61,10 +63,11 @@ export const WorkspaceBreadCrumb = ({ workspaceId, asLink = false }: { workspace
 }
 
 export const NoteBreadCrumb = ({ noteId, asLink = false }: { noteId: string, asLink?: boolean }) => {
-  const [note] = useNote(noteId)
+  const [note, loading] = useNote(noteId)
 
   const name = note?.name ?? "Без названия";
 
+  if (loading) return <Skeleton className="w-32 h-5" />
   if (asLink) {
     return (
       <BreadcrumbItem>

@@ -3,7 +3,7 @@ import type { GetV1WorkspacesWorkspaceIdTags200Item } from "@yz13/api/types";
 import { useEffect, useState } from "react";
 
 export type Tag = GetV1WorkspacesWorkspaceIdTags200Item;
-export const useWorkspaceTags = (workspaceId: string): [Tag[], boolean] => {
+export const useWorkspaceTags = (workspaceId?: string): [Tag[], boolean] => {
 
   const [tags, setTags] = useState<Tag[]>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -25,5 +25,6 @@ export const useWorkspaceTags = (workspaceId: string): [Tag[], boolean] => {
   useEffect(() => {
     fetchTags()
   }, [])
+  if (!workspaceId) return [[], false]
   return [tags, loading]
 }
