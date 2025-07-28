@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @import "@yz13/ui/globals.css";
+@plugin "@tailwindcss/typography";
 
 @source "../../node_modules/@yz13/ui";
 

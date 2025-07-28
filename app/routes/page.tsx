@@ -4,6 +4,7 @@ import { Badge } from "@yz13/ui/badge";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
 import { SidebarProvider } from "@yz13/ui/sidebar";
+import { Skeleton } from "@yz13/ui/skeleton";
 import { cn } from "@yz13/ui/utils";
 import { ArrowRightIcon, EyeIcon, EyeOffIcon, PlusIcon, SearchIcon, TagIcon } from "lucide-react";
 import { Link } from "react-router";
@@ -47,37 +48,45 @@ export default function () {
           <div className="py-6 space-y-4">
 
             {
-              workspaces.map(workspace => {
+              loading
+                ?
+                <>
+                  <Skeleton className="w-full h-32" />
+                  <Skeleton className="w-full h-32" />
+                  <Skeleton className="w-full h-32" />
+                </>
+                :
+                workspaces.map(workspace => {
 
-                const name = workspace.name ?? "Неизвестно";
-                const description = workspace.description ?? "Без описания";
-                const isPublic = workspace.public ?? false;
+                  const name = workspace.name ?? "Неизвестно";
+                  const description = workspace.description ?? "Без описания";
+                  const isPublic = workspace.public ?? false;
 
-                return (
-                  <div key={workspace.id} className="w-full rounded-3xl h-fit border">
-                    <div className="w-full p-3">
-                      <Badge variant="secondary">
-                        {isPublic ? <EyeIcon /> : <EyeOffIcon />}
-                        <span>{isPublic ? "Публичная" : "Приватная"}</span>
-                      </Badge>
-                    </div>
-                    <div className="w-full px-3 pb-3 h-full">
-                      <div className="w-full *:block space-y-1">
-                        <span className="text-2xl font-medium">{name}</span>
-                        <span className="text-base text-muted-foreground">{description}</span>
+                  return (
+                    <div key={workspace.id} className="w-full rounded-3xl h-fit border">
+                      <div className="w-full p-3">
+                        <Badge variant="secondary">
+                          {isPublic ? <EyeIcon /> : <EyeOffIcon />}
+                          <span>{isPublic ? "Публичная" : "Приватная"}</span>
+                        </Badge>
+                      </div>
+                      <div className="w-full px-3 pb-3 h-full">
+                        <div className="w-full *:block space-y-1">
+                          <span className="text-2xl font-medium">{name}</span>
+                          <span className="text-base text-muted-foreground">{description}</span>
+                        </div>
+                      </div>
+
+                      <div className="p-3 flex items-center justify-end">
+                        <Button asChild variant="secondary">
+                          <Link to={`/workspace/${workspace.id}`}>
+                            Открыть <ArrowRightIcon />
+                          </Link>
+                        </Button>
                       </div>
                     </div>
-
-                    <div className="p-3 flex items-center justify-end">
-                      <Button asChild variant="secondary">
-                        <Link to={`/workspace/${workspace.id}`}>
-                          Открыть <ArrowRightIcon />
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
-                )
-              })
+                  )
+                })
             }
 
           </div>

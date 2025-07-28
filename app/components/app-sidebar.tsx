@@ -1,5 +1,5 @@
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@yz13/ui/sidebar";
-import { SettingsIcon, StarIcon, StickyNoteIcon, TagIcon, TagsIcon, WifiIcon } from "lucide-react";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@yz13/ui/sidebar";
+import { FoldersIcon, WifiIcon } from "lucide-react";
 import User from "./user";
 
 export default function () {
@@ -14,46 +14,8 @@ export default function () {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton>
-                  <StickyNoteIcon />
-                  Все заметки
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <TagsIcon />
-                  Все тэги
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <SettingsIcon />
-                  Настройки
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Избранное</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <StarIcon />
-                  Заметка
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Тэги</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <TagIcon />
-                  Тэг
+                  <FoldersIcon />
+                  Пространства
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>

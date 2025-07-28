@@ -8,6 +8,7 @@ import {
 } from "react-router";
 
 import "@/styles/globals.css";
+import { Toaster } from "@yz13/ui/sonner";
 import type { Route } from "./+types/root";
 
 export const links: Route.LinksFunction = () => [
@@ -46,6 +47,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="inter-sans pixelify-sans jetbrains-mono">
+        <Toaster position="top-right" />
         {children}
         <ScrollRestoration />
         <Scripts />

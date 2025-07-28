@@ -3,10 +3,10 @@ import type { GetV1Workspaces200Item } from "@yz13/api/types";
 import { useEffect, useMemo, useState } from "react";
 import { useUser } from "./use-user";
 
+export type Workspace = GetV1Workspaces200Item;
 
 
-
-export const useWorkspaces = (): [GetV1Workspaces200Item[], boolean] => {
+export const useWorkspaces = (): [Workspace[], boolean] => {
   const [user, userLoading] = useUser();
 
   const [localLoading, setLocalLoading] = useState<boolean>(true)

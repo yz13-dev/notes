@@ -1,5 +1,6 @@
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@yz13/ui/sidebar";
-import { HistoryIcon, StarIcon, StickyNoteIcon, TagIcon, WifiIcon } from "lucide-react";
+import { HistoryIcon, StarIcon, StickyNoteIcon, TagIcon } from "lucide-react";
+import ConnectionStatus from "./connection-status";
 import User from "./user";
 
 export default function () {
@@ -67,8 +68,7 @@ export default function () {
             <SidebarMenu>
               <SidebarMenuItem className="text-muted-foreground">
                 <SidebarMenuButton>
-                  <WifiIcon />
-                  Подключение
+                  <ConnectionStatus />
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem className="text-muted-foreground">
