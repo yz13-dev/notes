@@ -2,8 +2,9 @@ import { useWorkspaces } from "@/hooks/use-workspaces";
 import { Badge } from "@yz13/ui/badge";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
+import { SidebarTrigger } from "@yz13/ui/sidebar";
 import { Skeleton } from "@yz13/ui/skeleton";
-import { ArrowRightIcon, EyeIcon, EyeOffIcon, PlusIcon, SearchIcon } from "lucide-react";
+import { ArrowRightIcon, EyeIcon, EyeOffIcon, PlusIcon, SearchIcon, SidebarIcon } from "lucide-react";
 import { Link } from "react-router";
 
 
@@ -16,7 +17,12 @@ export default function () {
 
         <div className="w-full p-6 space-y-3">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-medium">Пространства</h1>
+            <div className="flex items-center gap-2">
+              <SidebarTrigger className="md:hidden flex">
+                <SidebarIcon />
+              </SidebarTrigger>
+              <h1 className="text-2xl font-medium">Пространства</h1>
+            </div>
             <Button variant="ghost">
               <PlusIcon />
               Создать пространство
