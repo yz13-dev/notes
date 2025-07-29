@@ -8,28 +8,32 @@
     @apply text-muted-foreground
   }
 
+  *:first-child {
+    @apply mt-0;
+  }
+
   h1 {
-    @apply text-4xl font-bold text-foreground;
+    @apply text-4xl font-bold text-foreground my-4;
   }
 
   h2 {
-    @apply text-3xl font-bold text-foreground;
+    @apply text-3xl font-bold text-foreground my-3;
   }
 
   h3 {
-    @apply text-2xl font-bold text-foreground;
+    @apply text-2xl font-bold text-foreground my-2.5;
   }
 
   h4 {
-    @apply text-xl font-bold text-foreground;
+    @apply text-xl font-bold text-foreground my-2.5;
   }
 
   h5 {
-    @apply text-lg font-bold text-foreground;
+    @apply text-lg font-bold text-foreground my-2;
   }
 
   h6 {
-    @apply text-base font-bold text-foreground;
+    @apply text-base font-bold text-foreground my-1.5;
   }
 
   p {
