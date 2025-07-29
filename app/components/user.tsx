@@ -2,14 +2,16 @@ import { useUser } from "@/hooks/use-user"
 import { postV1AuthLogout } from "@yz13/api"
 import { Avatar, AvatarFallback, AvatarImage } from "@yz13/ui/avatar"
 import { Button } from "@yz13/ui/button"
+import { useSidebar } from "@yz13/ui/sidebar"
 import { Skeleton } from "@yz13/ui/skeleton"
-import { LogOutIcon } from "lucide-react"
+import { LogInIcon, LogOutIcon } from "lucide-react"
 
 
 
 export default function () {
 
-  const [user, loading, refresh] = useUser()
+  const [user, loading, refresh] = useUser();
+  const { open } = useSidebar()
 
   const logout = async () => {
     try {
@@ -22,7 +24,16 @@ export default function () {
   }
 
   if (loading) return <Skeleton className="w-full h-9" />
-  if (!user) return <Button className="w-full">Войти</Button>
+  if (!user) {
+    if (!open) return <Button size="icon"><LogInIcon /></Button>
+    return <Button className="w-full">Войти</Button>
+  }
+  if (!open) return (
+    <Avatar>
+      <AvatarImage src={user.avatar_url ?? undefined} alt={user.username} />
+      <AvatarFallback className="uppercase">{user.username.slice(0, 2)}</AvatarFallback>
+    </Avatar>
+  )
   return (
     <div className="flex items-center gap-2">
       <Avatar>

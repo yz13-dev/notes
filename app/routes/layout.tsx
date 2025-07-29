@@ -9,7 +9,7 @@ export default function () {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <div className="w-[calc(100%-var(--sidebar-width))] max-w-7xl mx-auto h-dvh">
+      <div className="md:w-[calc(100%-var(--sidebar-width))] w-full max-w-7xl mx-auto h-dvh">
         <Outlet />
       </div>
     </SidebarProvider>

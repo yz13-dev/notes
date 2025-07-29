@@ -23,7 +23,7 @@ export default function ({ params }: Route.ComponentProps) {
 
   return (
     <>
-      <div className="px-6 py-3">
+      <div className="px-6 py-3 border-b">
         <Breadcrumb noteId={noteId} workspaceId={id} />
       </div>
       <div className="w-full py-8 px-6 *:block space-y-2">

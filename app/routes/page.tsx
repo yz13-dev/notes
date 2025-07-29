@@ -11,7 +11,7 @@ export default function () {
   const [workspaces, loading] = useWorkspaces()
 
   return (
-    <div className="md:w-[calc(100%-var(--sidebar-width))] w-full h-dvh">
+    <div className="w-full h-dvh">
       <div className="w-full max-w-4xl mx-auto">
 
         <div className="w-full p-6 space-y-3">
@@ -28,15 +28,16 @@ export default function () {
           </div>
         </div>
 
-        <div className="p-6 space-y-4">
+        <div className="p-6 grid md:grid-cols-2 grid-cols-1 gap-4">
 
           {
             loading
               ?
               <>
-                <Skeleton className="w-full h-32" />
-                <Skeleton className="w-full h-32" />
-                <Skeleton className="w-full h-32" />
+                <Skeleton className="w-full h-48" />
+                <Skeleton className="w-full h-48" />
+                <Skeleton className="w-full h-48" />
+                <Skeleton className="w-full h-48" />
               </>
               :
               workspaces.map(workspace => {
