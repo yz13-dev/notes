@@ -13,7 +13,7 @@
     "@react-router/node": "^7.7.0",
     "@react-router/serve": "^7.7.0",
     "@tailwindcss/typography": "^0.5.16",
-    "@yz13/api": "^0.1.9",
+    "@yz13/api": "^0.1.10",
     "@yz13/ui": "^0.1.6",
     "ahooks": "^3.9.0",
     "date-fns": "^4.1.0",
@@ -21,7 +21,8 @@
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router": "^7.7.0"
+    "react-router": "^7.7.0",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "babel-plugin-react-compiler": "^19.1.0-rc.2",

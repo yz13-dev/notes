@@ -1,30 +1,36 @@
-import { getV1WorkspacesWorkspaceIdTags } from "@yz13/api";
-import type { GetV1WorkspacesWorkspaceIdTags200Item } from "@yz13/api/types";
 import { useEffect, useState } from "react";
+import { getV1WorkspacesWorkspaceIdTags } from "@yz13/api";
+import { useWorkspaceTagsStore } from "../stores/workspace-tags-store";
 
-export type Tag = GetV1WorkspacesWorkspaceIdTags200Item;
+export type Tag = import("../stores/workspace-tags-store").Tag;
+
 export const useWorkspaceTags = (workspaceId?: string): [Tag[], boolean] => {
+  const { tags, setTags } = useWorkspaceTagsStore();
+  const [loading, setLoading] = useState(false);
 
-  const [tags, setTags] = useState<Tag[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
+  const tagsList = workspaceId ? tags[workspaceId] || [] : [];
 
-  const fetchTags = async () => {
-    setLoading(true)
+  const fetchTags = async (workspaceId: string) => {
+    // Если уже загружены, не делаем повторный запрос
+    if (tags[workspaceId]) return;
+    
+    setLoading(true);
     try {
-      const tags = await getV1WorkspacesWorkspaceIdTags(workspaceId)
-
-      setTags(tags)
-
+      const tagsData = await getV1WorkspacesWorkspaceIdTags(workspaceId);
+      setTags(workspaceId, tagsData);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchTags()
-  }, [])
-  if (!workspaceId) return [[], false]
-  return [tags, loading]
-}
+    if (workspaceId) {
+      fetchTags(workspaceId);
+    }
+  }, [workspaceId]);
+
+  if (!workspaceId) return [[], false];
+  return [tagsList, loading];
+};

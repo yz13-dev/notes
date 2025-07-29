@@ -6,6 +6,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupConte
 import { FolderIcon, PlusIcon, StickyNoteIcon, TagIcon, WifiIcon } from "lucide-react";
 import { Link, useParams } from "react-router";
 import User from "./user";
+import CreateNoteModal from "./create-note-modal";
 
 export default function () {
 
@@ -24,10 +25,12 @@ export default function () {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <PlusIcon />
-                  <span>Добавить заметку</span>
-                </SidebarMenuButton>
+                <CreateNoteModal>
+                  <SidebarMenuButton>
+                    <PlusIcon />
+                    <span>Добавить заметку</span>
+                  </SidebarMenuButton>
+                </CreateNoteModal>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>

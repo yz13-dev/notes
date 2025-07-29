@@ -1,38 +1,38 @@
-import { getV1Workspaces } from "@yz13/api";
-import type { GetV1Workspaces200Item } from "@yz13/api/types";
 import { useEffect, useMemo, useState } from "react";
+import { getV1Workspaces } from "@yz13/api";
+import { useWorkspacesStore } from "../stores/workspaces-store";
 import { useUser } from "./use-user";
 
-export type Workspace = GetV1Workspaces200Item;
-
+export type Workspace = import("../stores/workspaces-store").Workspace;
 
 export const useWorkspaces = (): [Workspace[], boolean] => {
   const [user, userLoading] = useUser();
+  const { workspaces, setWorkspaces } = useWorkspacesStore();
+  const [loading, setLoading] = useState(false);
 
-  const [localLoading, setLocalLoading] = useState<boolean>(true)
-
-  const loading = useMemo(() => userLoading || localLoading, [userLoading, localLoading])
-
-  const [workspaces, setWorkspaces] = useState<GetV1Workspaces200Item[]>([])
+  const workspaceList = user ? workspaces[user.id] || [] : [];
+  const totalLoading = useMemo(() => userLoading || loading, [userLoading, loading]);
 
   const fetchWorkspaces = async (userId: string) => {
+    // Если уже загружены, не делаем повторный запрос
+    if (workspaces[userId]) return;
+    
+    setLoading(true);
     try {
-
-      const workspaces = await getV1Workspaces({
-        userId
-      })
-
-      setWorkspaces(workspaces)
-
+      const workspacesData = await getV1Workspaces({ userId });
+      setWorkspaces(userId, workspacesData);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     } finally {
-      setLocalLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    if (user) fetchWorkspaces(user.id)
-  }, [user])
-  return [workspaces, loading]
-}
+    if (user) {
+      fetchWorkspaces(user.id);
+    }
+  }, [user]);
+
+  return [workspaceList, totalLoading];
+};

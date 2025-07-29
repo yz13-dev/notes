@@ -1,28 +1,44 @@
-import { getV1AuthMe } from "@yz13/api";
-import type { GetV1UsersUid200 } from "@yz13/api/types";
 import { useEffect, useState } from "react";
+import { getV1AuthMe } from "@yz13/api";
+import { useUserStore } from "../stores/user-store";
 
-export type User = GetV1UsersUid200
+export type User = import("../stores/user-store").User;
 
 export const useUser = (): [User | null, boolean, () => Promise<void>] => {
+  const { user, setUser, clearUser } = useUserStore();
+  const [loading, setLoading] = useState(false);
 
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
+  const fetchUser = async () => {
+    // Если пользователь уже загружен, не делаем повторный запрос
+    if (user) return;
+    
+    setLoading(true);
+    try {
+      const userData = await getV1AuthMe();
+      setUser(userData);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const refresh = async () => {
-    setLoading(true)
+    clearUser(); // Очищаем кэш для принудительной перезагрузки
+    setLoading(true);
     try {
-      const user = await getV1AuthMe()
-      setUser(user)
-    } catch (e) {
-      console.error(e)
+      const userData = await getV1AuthMe();
+      setUser(userData);
+    } catch (error) {
+      console.error(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    refresh()
-  }, [])
-  return [user, loading, refresh]
-}
+    fetchUser();
+  }, []);
+
+  return [user, loading, refresh];
+};

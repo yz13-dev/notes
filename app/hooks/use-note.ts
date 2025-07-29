@@ -1,28 +1,35 @@
-import { getV1NotesNoteId } from "@yz13/api"
-import { useEffect, useState } from "react"
-import { Note } from "./use-notes"
+import { useEffect, useState } from "react";
+import { getV1NotesNoteId } from "@yz13/api";
+import { useNotesStore } from "../stores/notes-store";
 
-
+export type Note = import("../stores/notes-store").Note;
 
 export const useNote = (noteId: string): [Note | null, boolean] => {
+  const { noteById, setNote } = useNotesStore();
+  const [loading, setLoading] = useState(false);
 
-  const [note, setNote] = useState<Note | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
+  const note = noteById[noteId] || null;
 
-  const fetchNote = async () => {
-    setLoading(true)
+  const fetchNote = async (noteId: string) => {
+    // Если уже загружена, не делаем повторный запрос
+    if (noteById[noteId]) return;
+    
+    setLoading(true);
     try {
-      const note = await getV1NotesNoteId(noteId)
-      setNote(note)
+      const noteData = await getV1NotesNoteId(noteId);
+      if (noteData) {
+        setNote(noteData);
+      }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchNote()
-  }, [])
-  return [note, loading]
-}
+    fetchNote(noteId);
+  }, [noteId]);
+
+  return [note, loading];
+};
