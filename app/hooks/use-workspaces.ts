@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
 import { getV1Workspaces } from "@yz13/api";
+import { useEffect, useMemo, useState } from "react";
 import { useWorkspacesStore } from "../stores/workspaces-store";
 import { useUser } from "./use-user";
 
@@ -10,17 +10,16 @@ export const useWorkspaces = (): [Workspace[], boolean] => {
   const { workspaces, setWorkspaces } = useWorkspacesStore();
   const [loading, setLoading] = useState(false);
 
-  const workspaceList = user ? workspaces[user.id] || [] : [];
   const totalLoading = useMemo(() => userLoading || loading, [userLoading, loading]);
 
   const fetchWorkspaces = async (userId: string) => {
     // Если уже загружены, не делаем повторный запрос
-    if (workspaces[userId]) return;
-    
+    if (workspaces.length > 0) return;
+
     setLoading(true);
     try {
       const workspacesData = await getV1Workspaces({ userId });
-      setWorkspaces(userId, workspacesData);
+      setWorkspaces(workspacesData);
     } catch (error) {
       console.error(error);
     } finally {
@@ -34,5 +33,5 @@ export const useWorkspaces = (): [Workspace[], boolean] => {
     }
   }, [user]);
 
-  return [workspaceList, totalLoading];
+  return [workspaces, totalLoading];
 };

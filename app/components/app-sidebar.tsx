@@ -2,8 +2,8 @@ import { useNotes } from "@/hooks/use-notes";
 import { useWorkspaceTags } from "@/hooks/use-workspace-tags";
 import { useWorkspaces, Workspace } from "@/hooks/use-workspaces";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@yz13/ui/collapsible";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSkeleton, SidebarMenuSub, SidebarMenuSubItem } from "@yz13/ui/sidebar";
-import { FolderIcon, PlusIcon, StickyNoteIcon, TagIcon, WifiIcon } from "lucide-react";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuAction, SidebarMenuButton, SidebarMenuItem, SidebarMenuSkeleton, SidebarMenuSub, SidebarMenuSubItem } from "@yz13/ui/sidebar";
+import { ArrowRightIcon, ContactIcon, FolderIcon, KeyboardIcon, PlusIcon, StickyNoteIcon, TagIcon, WifiIcon } from "lucide-react";
 import { Link, useParams } from "react-router";
 import User from "./user";
 
@@ -20,23 +20,31 @@ export default function () {
         <User />
       </SidebarHeader>
       <SidebarContent>
-        {
-          workspaceId &&
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link to={`/workspace/${workspaceId}/new`}>
+                  <Link to="/workspace/new">
                     <PlusIcon />
-                    <span>Добавить заметку</span>
+                    <span>Добавить пространство</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              {
+                workspaceId &&
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <Link to={`/workspace/${workspaceId}/new`}>
+                      <PlusIcon />
+                      <span>Добавить заметку</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              }
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        }
         <SidebarGroup>
           <SidebarGroupLabel className="gap-2">
             Пространства
@@ -73,7 +81,7 @@ export default function () {
         }
       </SidebarContent>
       <SidebarFooter>
-        <SidebarGroup>
+        <SidebarGroup className="p-0">
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem className="text-muted-foreground">
@@ -84,11 +92,13 @@ export default function () {
               </SidebarMenuItem>
               <SidebarMenuItem className="text-muted-foreground">
                 <SidebarMenuButton>
+                  <KeyboardIcon />
                   <span>Горячие клавиши</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem className="text-muted-foreground">
                 <SidebarMenuButton>
+                  <ContactIcon />
                   <span>Контакты</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -138,6 +148,7 @@ const WorkspaceTags = ({ workspaceId }: { workspaceId: string }) => {
 const WorkspaceMenu = ({ workspace }: { workspace: Workspace }) => {
 
   const [notes, loading] = useNotes(workspace.id);
+  const count = notes.length;
 
   if (loading) {
     return (
@@ -176,6 +187,11 @@ const WorkspaceMenu = ({ workspace }: { workspace: Workspace }) => {
               }
             </SidebarMenuSub>
           </CollapsibleContent>
+          <SidebarMenuAction asChild>
+            <Link to={`/workspace/${workspace.id}`}>
+              <ArrowRightIcon />
+            </Link>
+          </SidebarMenuAction>
         </SidebarMenuItem>
       </Collapsible>
     </SidebarMenu>

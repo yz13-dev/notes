@@ -23,9 +23,11 @@ export default function () {
               </SidebarTrigger>
               <h1 className="text-2xl font-medium">Пространства</h1>
             </div>
-            <Button variant="ghost">
-              <PlusIcon />
-              Создать пространство
+            <Button variant="ghost" asChild>
+              <Link to="/workspace/new">
+                <PlusIcon />
+                Создать пространство
+              </Link>
             </Button>
           </div>
           <div className="w-full relative flex items-center h-10">

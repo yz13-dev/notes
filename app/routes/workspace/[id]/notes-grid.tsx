@@ -2,7 +2,7 @@ import { useNotes } from "@/hooks/use-notes"
 import { Badge } from "@yz13/ui/badge"
 import { Button } from "@yz13/ui/button"
 import { Skeleton } from "@yz13/ui/skeleton"
-import { ArrowRightIcon, TagIcon, TextIcon } from "lucide-react"
+import { ArrowRightIcon, PlusIcon, TagIcon, TextIcon } from "lucide-react"
 import { Link } from "react-router"
 
 
@@ -55,6 +55,13 @@ export default function ({ workspaceId }: Props) {
           )
         })
       }
+      <div className="relative w-full h-80 border rounded-xl flex items-center justify-center bg-card group hover:!border-foreground hover:cursor-pointer transition-all">
+        <Link to={`/workspace/${workspaceId}/new`} className="absolute inset-0" />
+        <div className="flex items-center gap-2 text-muted-foreground group-hover:text-foreground *:transition-all">
+          <PlusIcon />
+          <span>Добавить заметку</span>
+        </div>
+      </div>
     </div>
   )
 }

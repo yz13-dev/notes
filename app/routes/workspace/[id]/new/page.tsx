@@ -1,11 +1,8 @@
 import { Route } from ".react-router/types/app/routes/workspace/[id]/new/+types/page";
 import Breadcrumbs from "@/components/breadcrumbs";
 import MdxEditor from "@/components/mdx-editor";
-import { useWorkspace } from "@/hooks/use-workspace";
-import { useWorkspaceTags } from "@/hooks/use-workspace-tags";
 import { useNotesStore } from "@/stores/notes-store";
 import { postV1Notes } from "@yz13/api";
-import { Badge } from "@yz13/ui/badge";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
 import { Separator } from "@yz13/ui/separator";
@@ -24,12 +21,12 @@ export default function ({ params }: Route.ComponentProps) {
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
 
-  const [workspace, workspaceLoading] = useWorkspace(workspaceId);
-  const [tags] = useWorkspaceTags(workspaceId);
+  // const [workspace, workspaceLoading] = useWorkspace(workspaceId);
+  // const [tags] = useWorkspaceTags(workspaceId);
   const { addNote } = useNotesStore();
 
-  const workspaceName = workspace?.name ?? "Без названия";
-  const workspaceDescription = workspace?.description ?? "Без описания";
+  // const workspaceName = workspace?.name ?? "Без названия";
+  // const workspaceDescription = workspace?.description ?? "Без описания";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -109,9 +106,9 @@ export default function ({ params }: Route.ComponentProps) {
 
       <div className="w-full py-8 px-6 *:block space-y-2">
         <div className="flex flex-wrap flex-row gap-1 items-start w-full">
-          {tags.map(tag => (
+          {/* {tags.map(tag => (
             <Badge variant="secondary" key={tag.id}>{tag.tag}</Badge>
-          ))}
+          ))} */}
         </div>
 
         <div className="space-y-4">
@@ -119,7 +116,7 @@ export default function ({ params }: Route.ComponentProps) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Введите название заметки"
-            className="text-4xl font-semibold text-foreground border-none p-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="text-4xl font-semibold text-foreground border-none p-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none shadow-none"
             required
           />
 
@@ -127,7 +124,7 @@ export default function ({ params }: Route.ComponentProps) {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Введите описание заметки"
-            className="text-base text-muted-foreground border-none p-0 focus-visible:ring-0 focus-visible:ring-offset-0 resize-none"
+            className="text-base text-muted-foreground border-none p-0 focus-visible:ring-0 focus-visible:ring-offset-0 resize-none rounded-none shadow-none"
             rows={1}
           />
         </div>

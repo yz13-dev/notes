@@ -1,7 +1,9 @@
 import { Route } from ".react-router/types/app/routes/workspace/[id]/+types/page";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { useWorkspace } from "@/hooks/use-workspace";
+import { Button } from "@yz13/ui/button";
 import { Skeleton } from "@yz13/ui/skeleton";
+import { Trash2Icon } from "lucide-react";
 import NotesGrid from "./notes-grid";
 import Tags from "./tags";
 
@@ -16,8 +18,9 @@ export default function ({ params }: Route.ComponentProps) {
 
   return (
     <>
-      <div className="px-6 py-3 border-b">
+      <div className="px-6 py-3 border-b flex items-center justify-between">
         <Breadcrumbs workspaceId={id} />
+        <Button variant="destructive"><Trash2Icon /><span>Удалить</span></Button>
       </div>
       <div className="w-full py-8 px-6 *:block space-y-2">
         {
