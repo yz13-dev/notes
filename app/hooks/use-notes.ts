@@ -1,11 +1,10 @@
 import { getV1Notes } from "@yz13/api";
 import { useEffect, useState } from "react";
-import { useNotesStore } from "../stores/notes-store";
 
 export type Note = import("../stores/notes-store").Note;
 
 export const useNotes = (workspaceId?: string): [Note[], boolean] => {
-  const { notes, setNotes } = useNotesStore();
+  const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchNotes = async (workspaceId: string) => {
