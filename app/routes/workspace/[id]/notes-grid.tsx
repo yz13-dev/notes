@@ -15,7 +15,7 @@ export default function ({ workspaceId }: Props) {
 
   if (loading) {
     return (
-      <div className="w-full grid grid-cols-4 gap-4">
+      <div className="w-full grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
         <Skeleton className="w-full h-80" />
         <Skeleton className="w-full h-80" />
         <Skeleton className="w-full h-80" />
@@ -24,7 +24,7 @@ export default function ({ workspaceId }: Props) {
     )
   }
   return (
-    <div className="w-full grid grid-cols-4 gap-4">
+    <div className="w-full grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
       {
         notes.map(note => {
           const tags = (note.tags ?? []);

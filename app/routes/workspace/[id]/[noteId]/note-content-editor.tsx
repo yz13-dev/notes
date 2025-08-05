@@ -31,7 +31,7 @@ export default function ({ defaultContent = "", noteId }: Props) {
     if (!content) return;
     if (defaultContent === content) return;
     updateContent(content)
-  }, [content, defaultContent], { wait: 750 })
+  }, [content, defaultContent], { wait: 1500 })
   return (
     <MdxEditor
       placeholder="Начните набирать текст здесь..."
