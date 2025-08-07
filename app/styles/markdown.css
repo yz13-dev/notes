@@ -5,11 +5,15 @@
 .markdown {
 
   &>* {
-    @apply text-muted-foreground
+    @apply text-muted-foreground;
   }
 
   *:first-child {
     @apply mt-0;
+  }
+
+  * {
+    @apply mb-2;
   }
 
   h1 {

@@ -1,12 +1,15 @@
 import { Route } from ".react-router/types/app/routes/workspace/[id]/[noteId]/+types/page";
 import Breadcrumb from "@/components/breadcrumbs";
-import { useNote } from "@/hooks/use-note";
+import { useNote, useRefreshNote } from "@/hooks/use-note";
 import { useWorkspaceTags } from "@/hooks/use-workspace-tags";
+import { putV1NotesNoteId } from "@yz13/api";
 import { Badge } from "@yz13/ui/badge";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@yz13/ui/dropdown-menu";
 import { Separator } from "@yz13/ui/separator";
 import { Skeleton } from "@yz13/ui/skeleton";
 import { format, parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
+import { CheckIcon, PlusIcon } from "lucide-react";
 import NoteContentEditor from "./note-content-editor";
 
 export default function ({ params }: Route.ComponentProps) {
@@ -14,31 +17,102 @@ export default function ({ params }: Route.ComponentProps) {
   const noteId = params.noteId;
 
   const [tags] = useWorkspaceTags(id);
-  const [note, loading] = useNote(noteId)
+
+  const [note, loading] = useNote(noteId);
+  const noteTags = (note?.tags ?? []);
+
+  const [refresh] = useRefreshNote(noteId);
 
   const noteName = note?.name ?? "Без названия";
   const noteDescription = note?.description ?? "Без описания";
 
   const created_at = note?.created_at ? parseISO(note?.created_at) : null;
 
+  const addTag = async (tag: string) => {
+    try {
+      const ids = noteTags;
+      const result = await putV1NotesNoteId(noteId, {
+        tags: [...ids, tag]
+      })
+
+      if (result) {
+        refresh()
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  const removeTag = async (tag: string) => {
+    try {
+      const ids = tags.map(tag => tag.id);
+      const result = await putV1NotesNoteId(noteId, {
+        tags: ids.filter(item => item !== tag)
+      })
+
+      if (result) {
+        refresh()
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <>
       <div className="px-6 py-3 border-b">
         <Breadcrumb noteId={noteId} workspaceId={id} />
       </div>
-      <div className="w-full py-8 px-6 *:block space-y-2">
+      <div className="w-full py-8 px-6 space-y-2">
         <div className="flex flex-wrap flex-row gap-1 items-start w-full">
           {
             loading
               ? <Skeleton className="w-16 h-5" />
               :
-              tags.map(tag => {
-                return <Badge variant="secondary" key={tag.id}>{tag.tag}</Badge>
-              })
+              noteTags
+                .map(tag => {
+                  const fullTag = tags.find(item => item.id === tag);
+                  if (!fullTag) return null;
+                  return <Badge variant="secondary" key={fullTag.id}>{fullTag.tag}</Badge>
+                })
           }
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Badge variant="secondary">
+                <PlusIcon /> Добавить тэг
+              </Badge>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {
+                tags
+                  .map(tag => {
+                    const tags = (note?.tags ?? []);
+                    const isAlreadyAdded = tags.some(item => item === tag.id);
+                    return (
+                      <DropdownMenuItem
+                        key={tag.id}
+                        className="w-56"
+                        onClick={() => {
+                          if (isAlreadyAdded) removeTag(tag.id);
+                          else addTag(tag.id)
+                        }}
+                      >
+                        {tag.tag}
+                        {
+                          isAlreadyAdded &&
+                          <CheckIcon />
+                        }
+                      </DropdownMenuItem>
+                    )
+                  })
+              }
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-        <h1 className="text-4xl font-semibold text-foreground">{noteName}</h1>
-        <p className="text-base text-muted-foreground">{noteDescription}</p>
+        <div className="*:block space-y-2">
+          <h1 className="text-4xl font-semibold text-foreground">{noteName}</h1>
+          <p className="text-base text-muted-foreground">{noteDescription}</p>
+        </div>
         <div className="flex items-center gap-2">
           {
             created_at &&
