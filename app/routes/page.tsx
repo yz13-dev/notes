@@ -1,3 +1,5 @@
+import { useNotes } from "@/hooks/use-notes";
+import { Workspace } from "@/hooks/use-workspace";
 import { useWorkspaces } from "@/hooks/use-workspaces";
 import { Badge } from "@yz13/ui/badge";
 import { Button } from "@yz13/ui/button";
@@ -50,40 +52,71 @@ export default function () {
               :
               workspaces.map(workspace => {
 
-                const name = workspace.name ?? "Неизвестно";
-                const description = workspace.description ?? "Без описания";
-                const isPublic = workspace.public ?? false;
-
                 return (
-                  <div key={workspace.id} className="w-full rounded-3xl flex flex-col justify-between min-h-fit h-full border bg-card">
-                    <div>
-                      <div className="w-full p-3">
-                        <Badge variant="secondary">
-                          {isPublic ? <EyeIcon /> : <EyeOffIcon />}
-                          <span>{isPublic ? "Публичная" : "Приватная"}</span>
-                        </Badge>
-                      </div>
-                      <div className="w-full px-3 pb-3 h-fit">
-                        <div className="w-full *:block space-y-1">
-                          <span className="text-2xl font-medium">{name}</span>
-                          <span className="text-base text-muted-foreground">{description}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="p-3 flex items-center justify-end">
-                      <Button asChild variant="secondary">
-                        <Link to={`/workspace/${workspace.id}`}>
-                          Открыть <ArrowRightIcon />
-                        </Link>
-                      </Button>
-                    </div>
-                  </div>
+                  <WorkspaceCard key={workspace.id} workspace={workspace} />
                 )
               })
           }
 
         </div>
+      </div>
+    </div>
+  )
+}
+
+
+const WorkspaceCard = ({ workspace }: { workspace: Workspace }) => {
+
+  const name = workspace.name ?? "Неизвестно";
+  const description = workspace.description ?? "Без описания";
+  const isPublic = workspace.public ?? false;
+
+  const [notes, loading] = useNotes(workspace.id)
+
+  return (
+    <div key={workspace.id} className="w-full rounded-3xl flex flex-col justify-between min-h-fit h-full border bg-card">
+      <div>
+        <div className="w-full p-3">
+          <Badge variant="secondary">
+            {isPublic ? <EyeIcon /> : <EyeOffIcon />}
+            <span>{isPublic ? "Публичная" : "Приватная"}</span>
+          </Badge>
+        </div>
+        <div className="w-full px-3 pb-3 h-fit">
+          <div className="w-full *:block space-y-1">
+            <span className="text-2xl font-medium">{name}</span>
+            <span className="text-base text-muted-foreground">{description}</span>
+          </div>
+        </div>
+      </div>
+
+      {
+        notes.length === 0 &&
+        <div className="w-full h-full flex items-center justify-center">
+          <span className="text-muted-foreground">Нет заметок</span>
+        </div>
+      }
+      {
+        notes.length !== 0 &&
+        <ul className="divide-y *:min-h-9 *:py-1.5 *:px-3">
+          {
+            notes
+              .map(note => {
+                return <li key={`card/${note.id}`} className="flex flex-col hover:bg-secondary/20 relative">
+                  <Link to={`/workspace/${workspace.id}/${note.id}`} className="absolute inset-0 w-full h-full" />
+                  <span className="font-medium">{note.name ?? "Неизвестно"}</span>
+                  <span className="text-muted-foreground line-clamp-1 text-xs">{note.description ?? "Без описания"}</span>
+                </li>
+              })
+          }
+        </ul>
+      }
+      <div className="p-3 flex items-center justify-end">
+        <Button asChild variant="secondary">
+          <Link to={`/workspace/${workspace.id}`}>
+            Открыть <ArrowRightIcon />
+          </Link>
+        </Button>
       </div>
     </div>
   )
