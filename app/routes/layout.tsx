@@ -1,19 +1,27 @@
 import { Route } from ".react-router/types/app/routes/+types/layout";
 import AppSidebar from "@/components/app-sidebar";
-import { useUser } from "@/hooks/use-user";
+import { useUserStore } from "@/stores/user-store";
+import { getV1AuthMe } from "@yz13/api";
 import { SidebarProvider } from "@yz13/ui/sidebar";
-import { useDebounceEffect } from "ahooks";
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, redirect } from "react-router";
 
+export const clientLoader = async ({ }: Route.ClientLoaderArgs) => {
+  const user = await getV1AuthMe()
+  if (!user) {
+    redirect("/login")
+    return { user: null }
+  }
+  return { user }
+}
 
-export default function ({ }: Route.ComponentProps) {
-  const [user, loading] = useUser()
-  const nav = useNavigate()
+export default function ({ loaderData }: Route.ComponentProps) {
+  const data = loaderData;
+  const setUser = useUserStore(state => state.setUser);
 
-  useDebounceEffect(() => {
-    if (!loading && !user) nav("/login")
-  }, [user, loading],{wait:1000})
+  useEffect(() => {
+    if (data.user) setUser(data.user)
+  }, [data])
   return (
     <SidebarProvider>
       <AppSidebar />

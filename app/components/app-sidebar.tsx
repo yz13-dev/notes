@@ -91,13 +91,13 @@ export default function () {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem className="text-muted-foreground">
-                <SidebarMenuButton>
+                <SidebarMenuButton disabled>
                   <KeyboardIcon />
                   <span>Горячие клавиши</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem className="text-muted-foreground">
-                <SidebarMenuButton>
+                <SidebarMenuButton disabled>
                   <ContactIcon />
                   <span>Контакты</span>
                 </SidebarMenuButton>

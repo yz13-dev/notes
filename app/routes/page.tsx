@@ -7,7 +7,6 @@ import { Skeleton } from "@yz13/ui/skeleton";
 import { ArrowRightIcon, EyeIcon, EyeOffIcon, PlusIcon, SearchIcon, SidebarIcon } from "lucide-react";
 import { Link } from "react-router";
 
-
 export default function () {
   const [workspaces, loading] = useWorkspaces()
 
