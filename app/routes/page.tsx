@@ -12,6 +12,7 @@ export default function () {
 
   return (
     <div className="w-full h-dvh">
+      <title>Пространства</title>
       <div className="w-full max-w-4xl mx-auto">
 
         <div className="w-full p-6 space-y-3">
@@ -54,17 +55,19 @@ export default function () {
                 const isPublic = workspace.public ?? false;
 
                 return (
-                  <div key={workspace.id} className="w-full rounded-3xl h-fit border">
-                    <div className="w-full p-3">
-                      <Badge variant="secondary">
-                        {isPublic ? <EyeIcon /> : <EyeOffIcon />}
-                        <span>{isPublic ? "Публичная" : "Приватная"}</span>
-                      </Badge>
-                    </div>
-                    <div className="w-full px-3 pb-3 h-full">
-                      <div className="w-full *:block space-y-1">
-                        <span className="text-2xl font-medium">{name}</span>
-                        <span className="text-base text-muted-foreground">{description}</span>
+                  <div key={workspace.id} className="w-full rounded-3xl flex flex-col justify-between min-h-fit h-full border bg-card">
+                    <div>
+                      <div className="w-full p-3">
+                        <Badge variant="secondary">
+                          {isPublic ? <EyeIcon /> : <EyeOffIcon />}
+                          <span>{isPublic ? "Публичная" : "Приватная"}</span>
+                        </Badge>
+                      </div>
+                      <div className="w-full px-3 pb-3 h-fit">
+                        <div className="w-full *:block space-y-1">
+                          <span className="text-2xl font-medium">{name}</span>
+                          <span className="text-base text-muted-foreground">{description}</span>
+                        </div>
                       </div>
                     </div>
 

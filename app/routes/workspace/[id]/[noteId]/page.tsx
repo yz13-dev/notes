@@ -60,6 +60,7 @@ export default function ({ params }: Route.ComponentProps) {
   }
   return (
     <>
+      <title>{note?.name ?? "Без названия"}</title>
       <div className="px-6 py-3 border-b">
         <Breadcrumb noteId={noteId} workspaceId={id} />
       </div>
