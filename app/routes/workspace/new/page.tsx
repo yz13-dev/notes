@@ -1,5 +1,5 @@
 import { useUser } from "@/hooks/use-user";
-import { useWorkspacesStore } from "@/stores/workspaces-store";
+import { useRefreshWorkspaces } from "@/hooks/use-workspaces";
 import { postV1Workspaces } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
@@ -14,7 +14,7 @@ import { Link, useNavigate } from "react-router";
 export default function () {
   const navigate = useNavigate();
   const [user] = useUser();
-  const { addWorkspace } = useWorkspacesStore();
+  const [refresh] = useRefreshWorkspaces();
 
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
@@ -45,7 +45,7 @@ export default function () {
 
       if (newWorkspace) {
         // Добавляем новое пространство в стор
-        addWorkspace(user.id, newWorkspace);
+        refresh();
 
         toast.success("Пространство создано");
 

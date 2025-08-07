@@ -35,3 +35,29 @@ export const useWorkspaces = (): [Workspace[], boolean] => {
 
   return [workspaces, totalLoading];
 };
+
+
+export const useRefreshWorkspaces = () => {
+  const setWorkspaces = useWorkspacesStore(state => state.setWorkspaces);
+  const [loading, setLoading] = useState(false);
+  const [user] = useUser();
+
+  const refresh = async () => {
+    const userId = user?.id;
+    if (!user) return;
+
+    // Если уже загружены, не делаем повторный запрос
+
+    setLoading(true);
+    try {
+      const workspacesData = await getV1Workspaces({ userId });
+      setWorkspaces(workspacesData);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return [refresh, loading] as const;
+}
