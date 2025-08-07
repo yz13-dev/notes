@@ -89,27 +89,33 @@ const WorkspaceCard = ({ workspace }: { workspace: Workspace }) => {
           </div>
         </div>
       </div>
-
       {
-        notes.length === 0 &&
-        <div className="w-full h-full flex items-center justify-center">
-          <span className="text-muted-foreground">Нет заметок</span>
-        </div>
-      }
-      {
-        notes.length !== 0 &&
-        <ul className="divide-y *:min-h-9 *:py-1.5 *:px-3">
-          {
-            notes
-              .map(note => {
-                return <li key={`card/${note.id}`} className="flex flex-col hover:bg-secondary/20 relative">
-                  <Link to={`/workspace/${workspace.id}/${note.id}`} className="absolute inset-0 w-full h-full" />
-                  <span className="font-medium">{note.name ?? "Неизвестно"}</span>
-                  <span className="text-muted-foreground line-clamp-1 text-xs">{note.description ?? "Без описания"}</span>
-                </li>
-              })
-          }
-        </ul>
+        loading
+          ?
+          <ul className="divide-y">
+            <li><Skeleton className="rounded-none h-[52px]" /></li>
+            <li><Skeleton className="rounded-none h-[52px]" /></li>
+            <li><Skeleton className="rounded-none h-[52px]" /></li>
+          </ul>
+          :
+          notes.length === 0
+            ?
+            <div className="w-full h-full flex items-center py-3 justify-center">
+              <span className="text-muted-foreground">Нет заметок</span>
+            </div>
+            :
+            <ul className="divide-y *:min-h-9 *:py-1.5 *:px-3">
+              {
+                notes
+                  .map(note => {
+                    return <li key={`card/${note.id}`} className="flex flex-col hover:bg-secondary/20 relative">
+                      <Link to={`/workspace/${workspace.id}/${note.id}`} className="absolute inset-0 w-full h-full" />
+                      <span className="font-medium">{note.name ?? "Неизвестно"}</span>
+                      <span className="text-muted-foreground line-clamp-1 text-xs">{note.description ?? "Без описания"}</span>
+                    </li>
+                  })
+              }
+            </ul>
       }
       <div className="p-3 flex items-center justify-end">
         <Button asChild variant="secondary">
