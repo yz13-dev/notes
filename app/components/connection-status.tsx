@@ -10,8 +10,6 @@ export default function () {
   const network = useNetwork();
   const [loading, setLoading] = useState<boolean>(true);
 
-  console.log("network", network)
-
   const isOnline = network.online ?? false;
 
   useEffect(() => {

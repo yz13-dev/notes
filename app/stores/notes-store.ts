@@ -5,34 +5,38 @@ import { create } from 'zustand'
 export type Note = NonNullable<GetV1NotesNoteId200>
 
 interface NotesState {
-  notes: Note[] // кэш по workspaceId
-  noteById: Note | null // кэш по noteId
-  setNotes: (notes: Note[]) => void
+  notes: Map<string, Note[]> // кэш по workspaceId
+  note: Note | null // кэш по noteId
+  setNotes: (id: string, notes: Note[]) => void
   setNote: (note: Note) => void
-  addNote: (note: Note) => void
   refresh: (workspaceId: string) => void
 }
 
 export const useNotesStore = create<NotesState>((set) => ({
-  notes: [],
-  noteById: null,
+  notes: new Map(),
+  note: null,
 
-  setNotes: (notes: Note[]) => {
-    set({ notes })
+  setNotes: (
+    id,
+    notes,
+  ) => {
+    set(state => {
+      const updated = state.notes.set(id, notes)
+      return { notes: updated }
+    })
   },
 
   setNote: (note: Note) => {
-    set({ noteById: note })
-  },
-
-  addNote: (note: Note) => {
-    set(state => ({ ...state, notes: [...state.notes, note] }));
+    set({ note })
   },
 
   refresh: async (workspaceId) => {
     try {
       const notes = await getV1Notes({ workspaceId })
-      set({ notes })
+      set(state => {
+        const updated = state.notes.set(workspaceId, notes)
+        return { notes: updated }
+      })
     } catch (error) {
       console.error(error)
     }

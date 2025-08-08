@@ -10,6 +10,7 @@ import { Skeleton } from "@yz13/ui/skeleton";
 import { format, parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
 import { CheckIcon, PlusIcon } from "lucide-react";
+import { DeleteButton } from "./delete-button";
 import NoteContentEditor from "./note-content-editor";
 
 export default function ({ params }: Route.ComponentProps) {
@@ -61,8 +62,9 @@ export default function ({ params }: Route.ComponentProps) {
   return (
     <>
       <title>{note?.name ?? "Без названия"}</title>
-      <div className="px-6 py-3 border-b">
+      <div className="px-6 py-3 border-b flex items-center justify-between">
         <Breadcrumb noteId={noteId} workspaceId={id} />
+        <DeleteButton noteId={noteId} workspaceId={id} />
       </div>
       <div className="w-full py-8 px-6 space-y-2">
         <div className="flex flex-wrap flex-row gap-1 items-start w-full">

@@ -1,4 +1,5 @@
 import { useNotes } from "@/hooks/use-notes"
+import { useWorkspaceTags } from "@/hooks/use-workspace-tags"
 import { Badge } from "@yz13/ui/badge"
 import { Button } from "@yz13/ui/button"
 import { Skeleton } from "@yz13/ui/skeleton"
@@ -11,7 +12,8 @@ type Props = {
 }
 export default function ({ workspaceId }: Props) {
 
-  const [notes, loading] = useNotes(workspaceId)
+  const [notes, loading] = useNotes(workspaceId);
+  const [tags] = useWorkspaceTags(workspaceId);
 
   if (loading) {
     return (
@@ -27,15 +29,34 @@ export default function ({ workspaceId }: Props) {
     <div className="w-full grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
       {
         notes.map(note => {
-          const tags = (note.tags ?? []);
+          const noteTags = (note.tags ?? []).map(tag => tags.find(t => t.id === tag)).filter(tag => tag !== undefined);
           const name = note.name ?? "Без названия";
           const description = note.description ?? "Без описания";
 
           const contentLength = (note.content ?? "").length;
+          const isMoreThanSlice = noteTags.length > 2;
+          const sliceDiff = isMoreThanSlice ? noteTags.length - 2 : 0;
           return (
             <div key={note.id} className="w-full h-80 border rounded-xl flex flex-col justify-between bg-card">
-              <div className="w-full p-3">
-                <Badge variant="secondary"><TagIcon />Тэги</Badge>
+              <div className="w-full p-3 flex items-center gap-2">
+                {
+                  noteTags.length === 0 &&
+                  <Badge variant="secondary">Без тегов</Badge>
+                }
+                {
+                  noteTags
+                    .slice(0, 2)
+                    .map(tag => (
+                      <Badge variant="secondary" key={`${note.id}/${tag.id}`}>
+                        <TagIcon />
+                        {tag.tag}
+                      </Badge>
+                    ))
+                }
+                {
+                  isMoreThanSlice &&
+                  <Badge variant="secondary">+{sliceDiff}</Badge>
+                }
               </div>
               <div className="w-full px-3 h-full">
                 <div className="w-full *:block space-y-1">

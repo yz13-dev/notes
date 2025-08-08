@@ -7,9 +7,10 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@yz13/ui/co
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@yz13/ui/dropdown-menu";
 import { Input } from "@yz13/ui/input";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuAction, SidebarMenuButton, SidebarMenuItem, SidebarMenuSkeleton, SidebarMenuSub, SidebarMenuSubItem } from "@yz13/ui/sidebar";
-import { ArrowRightIcon, CheckIcon, ContactIcon, Edit3Icon, EllipsisIcon, FolderIcon, KeyboardIcon, Loader2Icon, PlusIcon, StickyNoteIcon, TagIcon, Trash2Icon, WifiIcon, XIcon } from "lucide-react";
+import { ArrowRightIcon, CheckIcon, ContactIcon, Edit3Icon, EllipsisIcon, FolderIcon, KeyboardIcon, Loader2Icon, PlusIcon, StickyNoteIcon, TagIcon, Trash2Icon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { Link, useParams } from "react-router";
+import ConnectionStatus from "./connection-status";
 import User from "./user";
 
 
@@ -93,8 +94,7 @@ export default function () {
             <SidebarMenu>
               <SidebarMenuItem className="text-muted-foreground">
                 <SidebarMenuButton>
-                  <WifiIcon />
-                  Подключение
+                  <ConnectionStatus />
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem className="text-muted-foreground">

@@ -28,6 +28,7 @@ export default function ({ workspaceId }: Props) {
       </Badge>
     </div>
   )
+  if (tags.length === 0) return <Badge variant="secondary">Без тегов</Badge>
   return (
     <div className="w-full flex flex-row flex-wrap iteitems-start gap-1">
       {

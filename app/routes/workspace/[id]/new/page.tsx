@@ -1,7 +1,7 @@
 import { Route } from ".react-router/types/app/routes/workspace/[id]/new/+types/page";
 import Breadcrumbs from "@/components/breadcrumbs";
 import MdxEditor from "@/components/mdx-editor";
-import { useNotesStore } from "@/stores/notes-store";
+import { useRefreshNotes } from "@/hooks/use-notes";
 import { postV1Notes } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
@@ -23,7 +23,8 @@ export default function ({ params }: Route.ComponentProps) {
 
   // const [workspace, workspaceLoading] = useWorkspace(workspaceId);
   // const [tags] = useWorkspaceTags(workspaceId);
-  const { addNote } = useNotesStore();
+
+  const [refresh] = useRefreshNotes(workspaceId)
 
   // const workspaceName = workspace?.name ?? "Без названия";
   // const workspaceDescription = workspace?.description ?? "Без описания";
@@ -47,7 +48,7 @@ export default function ({ params }: Route.ComponentProps) {
 
       if (newNote) {
         // Добавляем новую заметку в стор
-        addNote(newNote);
+        refresh();
 
         toast.success("Заметка создана");
 
