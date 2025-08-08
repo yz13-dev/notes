@@ -5,11 +5,9 @@ import { useNotesStore } from "../stores/notes-store";
 export type Note = import("../stores/notes-store").Note;
 
 export const useNote = (noteId: string): [Note | null, boolean] => {
-  const noteById = useNotesStore(state => state.noteById);
+  const note = useNotesStore(state => state.note);
   const setNote = useNotesStore(state => state.setNote);
   const [loading, setLoading] = useState(false);
-
-  const note = noteById || null;
 
   const fetchNote = async (noteId: string) => {
     setLoading(true);
