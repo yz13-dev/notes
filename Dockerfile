@@ -21,6 +21,7 @@ ARG VITE_SUPABASE_URL
 
 ENV VITE_EDGE_CONFIG=${VITE_EDGE_CONFIG}
 ENV VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
+ENV VITE_APP_URL="https://notes.yz13.ru"
 
 # Собираем приложение
 RUN bun run build
