@@ -1,4 +1,4 @@
-import { getV1Workspaces } from "@yz13/api";
+import { getWorkspacesV1 } from "@yz13/api";
 import { useEffect, useMemo, useState } from "react";
 import { useWorkspacesStore } from "../stores/workspaces-store";
 import { useUser } from "./use-user";
@@ -18,7 +18,7 @@ export const useWorkspaces = (): [Workspace[], boolean] => {
 
     setLoading(true);
     try {
-      const workspacesData = await getV1Workspaces({ userId });
+      const workspacesData = await getWorkspacesV1({ userId });
       setWorkspaces(workspacesData);
     } catch (error) {
       console.error(error);
@@ -50,7 +50,7 @@ export const useRefreshWorkspaces = () => {
 
     setLoading(true);
     try {
-      const workspacesData = await getV1Workspaces({ userId });
+      const workspacesData = await getWorkspacesV1({ userId });
       setWorkspaces(workspacesData);
     } catch (error) {
       console.error(error);

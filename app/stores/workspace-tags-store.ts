@@ -1,7 +1,7 @@
-import type { GetV1WorkspacesWorkspaceIdTags200Item } from "@yz13/api/types";
+import type { GetWorkspacesV1WorkspaceIdTags200Item } from "@yz13/api/types";
 import { create } from 'zustand';
 
-export type Tag = GetV1WorkspacesWorkspaceIdTags200Item
+export type Tag = GetWorkspacesV1WorkspaceIdTags200Item
 
 interface WorkspaceTagsState {
   tags: Tag[];

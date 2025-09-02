@@ -1,8 +1,8 @@
-import { getV1Workspaces } from '@yz13/api'
-import type { GetV1Workspaces200Item } from "@yz13/api/types"
+import { getWorkspacesV1 } from '@yz13/api'
+import type { GetWorkspacesV1200Item } from "@yz13/api/types"
 import { create } from 'zustand'
 
-export type Workspace = GetV1Workspaces200Item
+export type Workspace = GetWorkspacesV1200Item
 
 interface WorkspacesState {
   workspaces: Workspace[] // кэш по userId
@@ -30,7 +30,7 @@ export const useWorkspacesStore = create<WorkspacesState>((set) => ({
   },
 
   refresh: async (userId) => {
-    const workspaces = await getV1Workspaces({ userId })
+    const workspaces = await getWorkspacesV1({ userId })
     set({ workspaces })
   },
 

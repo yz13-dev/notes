@@ -1,5 +1,5 @@
 import { useUser } from "@/hooks/use-user"
-import { postV1AuthLogout } from "@yz13/api"
+import { postAuthV1Logout } from "@yz13/api"
 import { Avatar, AvatarFallback, AvatarImage } from "@yz13/ui/avatar"
 import { Button } from "@yz13/ui/button"
 import { useSidebar } from "@yz13/ui/sidebar"
@@ -15,7 +15,7 @@ export default function () {
 
   const logout = async () => {
     try {
-      await postV1AuthLogout()
+      await postAuthV1Logout()
     } catch (e) {
       console.error(e)
     } finally {

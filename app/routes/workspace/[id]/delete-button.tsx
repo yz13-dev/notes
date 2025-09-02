@@ -1,5 +1,5 @@
 import { useRefreshWorkspaces } from "@/hooks/use-workspaces"
-import { deleteV1WorkspacesWorkspaceId } from "@yz13/api"
+import { deleteWorkspacesV1WorkspaceId } from "@yz13/api"
 import { Button } from "@yz13/ui/button"
 import { Loader2, Trash2Icon } from "lucide-react"
 import { useState } from "react"
@@ -15,7 +15,7 @@ export const DeleteButton = ({ id }: { id: string }) => {
   const remove = async () => {
     setLoading(true)
     try {
-      await deleteV1WorkspacesWorkspaceId(id);
+      await deleteWorkspacesV1WorkspaceId(id);
 
       refresh()
 

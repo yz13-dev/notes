@@ -2,7 +2,7 @@ import { Route } from ".react-router/types/app/routes/workspace/[id]/[noteId]/+t
 import Breadcrumb from "@/components/breadcrumbs";
 import { useNote, useRefreshNote } from "@/hooks/use-note";
 import { useWorkspaceTags } from "@/hooks/use-workspace-tags";
-import { putV1NotesNoteId } from "@yz13/api";
+import { putNotesV1NoteId } from "@yz13/api";
 import { Badge } from "@yz13/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@yz13/ui/dropdown-menu";
 import { Separator } from "@yz13/ui/separator";
@@ -32,7 +32,7 @@ export default function ({ params }: Route.ComponentProps) {
   const addTag = async (tag: string) => {
     try {
       const ids = noteTags;
-      const result = await putV1NotesNoteId(noteId, {
+      const result = await putNotesV1NoteId(noteId, {
         tags: [...ids, tag]
       })
 
@@ -47,7 +47,7 @@ export default function ({ params }: Route.ComponentProps) {
   const removeTag = async (tag: string) => {
     try {
       const ids = tags.map(tag => tag.id);
-      const result = await putV1NotesNoteId(noteId, {
+      const result = await putNotesV1NoteId(noteId, {
         tags: ids.filter(item => item !== tag)
       })
 

@@ -1,6 +1,6 @@
 import { useUser } from "@/hooks/use-user";
 import { useRefreshWorkspaces } from "@/hooks/use-workspaces";
-import { postV1Workspaces } from "@yz13/api";
+import { postWorkspacesV1 } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
 import { Label } from "@yz13/ui/label";
@@ -36,7 +36,7 @@ export default function () {
 
     setLoading(true);
     try {
-      const newWorkspace = await postV1Workspaces({
+      const newWorkspace = await postWorkspacesV1({
         name: name.trim(),
         description: description.trim() || undefined,
         public: isPublic,

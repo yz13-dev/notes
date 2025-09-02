@@ -1,13 +1,13 @@
 import { Route } from ".react-router/types/app/routes/+types/layout";
 import AppSidebar from "@/components/app-sidebar";
 import { useUserStore } from "@/stores/user-store";
-import { getV1AuthMe } from "@yz13/api";
+import { getAuthV1Me } from "@yz13/api";
 import { SidebarProvider } from "@yz13/ui/sidebar";
 import { useEffect } from "react";
 import { Outlet, redirect } from "react-router";
 
 export const clientLoader = async ({ }: Route.ClientLoaderArgs) => {
-  const user = await getV1AuthMe()
+  const user = await getAuthV1Me()
   if (!user) {
     redirect("/login")
     return { user: null }

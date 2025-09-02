@@ -1,4 +1,4 @@
-import { getV1WorkspacesWorkspaceId } from "@yz13/api";
+import { getWorkspacesV1WorkspaceId } from "@yz13/api";
 import { useEffect, useState } from "react";
 import { useWorkspacesStore } from "../stores/workspaces-store";
 
@@ -16,7 +16,7 @@ export const useWorkspace = (id: string): [Workspace | null, boolean] => {
 
     setLoading(true);
     try {
-      const workspaceData = await getV1WorkspacesWorkspaceId(workspaceId);
+      const workspaceData = await getWorkspacesV1WorkspaceId(workspaceId);
       if (workspaceData) {
         setWorkspace(workspaceData);
       }

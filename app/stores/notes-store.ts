@@ -1,8 +1,8 @@
-import { getV1Notes } from '@yz13/api'
-import type { GetV1NotesNoteId200 } from "@yz13/api/types"
+import { getNotesV1 } from '@yz13/api'
+import type { GetNotesV1NoteId200 } from "@yz13/api/types"
 import { create } from 'zustand'
 
-export type Note = NonNullable<GetV1NotesNoteId200>
+export type Note = NonNullable<GetNotesV1NoteId200>
 
 interface NotesState {
   notes: Map<string, Note[]> // кэш по workspaceId
@@ -32,7 +32,7 @@ export const useNotesStore = create<NotesState>((set) => ({
 
   refresh: async (workspaceId) => {
     try {
-      const notes = await getV1Notes({ workspaceId })
+      const notes = await getNotesV1({ workspaceId })
       set(state => {
         const updated = state.notes.set(workspaceId, notes)
         return { notes: updated }

@@ -1,5 +1,5 @@
+import { getAuthV1Me } from "@yz13/api";
 import { useEffect, useState } from "react";
-import { getV1AuthMe } from "@yz13/api";
 import { useUserStore } from "../stores/user-store";
 
 export type User = import("../stores/user-store").User;
@@ -11,10 +11,10 @@ export const useUser = (): [User | null, boolean, () => Promise<void>] => {
   const fetchUser = async () => {
     // Если пользователь уже загружен, не делаем повторный запрос
     if (user) return;
-    
+
     setLoading(true);
     try {
-      const userData = await getV1AuthMe();
+      const userData = await getAuthV1Me();
       setUser(userData);
     } catch (error) {
       console.error(error);
@@ -27,7 +27,7 @@ export const useUser = (): [User | null, boolean, () => Promise<void>] => {
     clearUser(); // Очищаем кэш для принудительной перезагрузки
     setLoading(true);
     try {
-      const userData = await getV1AuthMe();
+      const userData = await getAuthV1Me();
       setUser(userData);
     } catch (error) {
       console.error(error);

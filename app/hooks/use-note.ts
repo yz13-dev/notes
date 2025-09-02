@@ -1,4 +1,4 @@
-import { getV1NotesNoteId } from "@yz13/api";
+import { getNotesV1NoteId } from "@yz13/api";
 import { useEffect, useState } from "react";
 import { useNotesStore } from "../stores/notes-store";
 
@@ -12,7 +12,7 @@ export const useNote = (noteId: string): [Note | null, boolean] => {
   const fetchNote = async (noteId: string) => {
     setLoading(true);
     try {
-      const noteData = await getV1NotesNoteId(noteId);
+      const noteData = await getNotesV1NoteId(noteId);
       if (noteData) {
         setNote(noteData);
       }
@@ -38,7 +38,7 @@ export const useRefreshNote = (noteId: string) => {
   const refresh = async () => {
     setLoading(true);
     try {
-      const noteData = await getV1NotesNoteId(noteId);
+      const noteData = await getNotesV1NoteId(noteId);
       if (noteData) {
         setNote(noteData);
       }

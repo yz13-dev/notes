@@ -2,7 +2,7 @@ import { Route } from ".react-router/types/app/routes/workspace/[id]/new/+types/
 import Breadcrumbs from "@/components/breadcrumbs";
 import MdxEditor from "@/components/mdx-editor";
 import { useRefreshNotes } from "@/hooks/use-notes";
-import { postV1Notes } from "@yz13/api";
+import { postNotesV1 } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Input } from "@yz13/ui/input";
 import { Separator } from "@yz13/ui/separator";
@@ -39,7 +39,7 @@ export default function ({ params }: Route.ComponentProps) {
 
     setLoading(true);
     try {
-      const newNote = await postV1Notes({
+      const newNote = await postNotesV1({
         name: name.trim(),
         description: description.trim() || undefined,
         content: content.trim() || undefined,

@@ -1,5 +1,5 @@
 import MdxEditor from "@/components/mdx-editor";
-import { putV1NotesNoteId } from "@yz13/api";
+import { putNotesV1NoteId } from "@yz13/api";
 import { toast } from "@yz13/ui/sonner";
 import { useDebounceEffect } from "ahooks";
 import { useState } from "react";
@@ -16,7 +16,7 @@ export default function ({ defaultContent = "", noteId }: Props) {
 
   const updateContent = async (content: string) => {
     try {
-      const result = await putV1NotesNoteId(noteId, { content })
+      const result = await putNotesV1NoteId(noteId, { content })
 
       if (result) {
         toast.success("Заметка обновлена")

@@ -1,4 +1,4 @@
-import { getV1WorkspacesWorkspaceIdTags } from "@yz13/api";
+import { getWorkspacesV1WorkspaceIdTags } from "@yz13/api";
 import { useEffect, useState } from "react";
 import { Tag, useWorkspaceTagsStore } from "../stores/workspace-tags-store";
 
@@ -9,7 +9,7 @@ export const useWorkspaceTags = (workspaceId?: string): [Tag[], boolean, () => v
   const fetchTags = async (workspaceId: string) => {
     setLoading(true);
     try {
-      const tagsData = await getV1WorkspacesWorkspaceIdTags(workspaceId);
+      const tagsData = await getWorkspacesV1WorkspaceIdTags(workspaceId);
       setTags(tagsData);
     } catch (error) {
       console.error(error);
@@ -40,7 +40,7 @@ export const useRefreshTags = (workspaceId: string) => {
   const fetchTags = async (workspaceId: string) => {
     setLoading(true);
     try {
-      const tagsData = await getV1WorkspacesWorkspaceIdTags(workspaceId);
+      const tagsData = await getWorkspacesV1WorkspaceIdTags(workspaceId);
       setTags(tagsData);
     } catch (error) {
       console.error(error);

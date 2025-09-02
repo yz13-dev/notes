@@ -1,7 +1,7 @@
 import { useNotes } from "@/hooks/use-notes";
 import { Tag, useRefreshTags, useWorkspaceTags } from "@/hooks/use-workspace-tags";
 import { useWorkspaces, Workspace } from "@/hooks/use-workspaces";
-import { deleteV1TagsTag, postV1Tags, putV1TagsTag } from "@yz13/api";
+import { deleteTagsV1Tag, postTagsV1, putTagsV1Tag } from "@yz13/api";
 import { Button } from "@yz13/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@yz13/ui/collapsible";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@yz13/ui/dropdown-menu";
@@ -123,7 +123,7 @@ const WorkspaceTags = ({ workspaceId }: { workspaceId: string }) => {
 
   const newTag = async () => {
     try {
-      const tag = await postV1Tags({ tag: "Новый тэг", workspace_id: workspaceId });
+      const tag = await postTagsV1({ tag: "Новый тэг", workspace_id: workspaceId });
       console.log(tag)
 
       if (tag) {
@@ -179,7 +179,7 @@ const WorkspaceTag = ({ tag, workspaceId }: { tag: Tag, workspaceId: string }) =
 
   const update = async () => {
     try {
-      const result = await putV1TagsTag(tag.id, { tag: name, workspace_id: workspaceId })
+      const result = await putTagsV1Tag(tag.id, { tag: name, workspace_id: workspaceId })
 
       if (result) {
         refresh();
@@ -193,7 +193,7 @@ const WorkspaceTag = ({ tag, workspaceId }: { tag: Tag, workspaceId: string }) =
 
   const remove = async () => {
     try {
-      await deleteV1TagsTag(tag.id);
+      await deleteTagsV1Tag(tag.id);
       refresh();
       setOpen(false);
     } catch (error) {

@@ -1,7 +1,7 @@
+import type { GetUserV1Uid200 } from "@yz13/api/types"
 import { create } from 'zustand'
-import type { GetV1UsersUid200 } from "@yz13/api/types"
 
-export type User = GetV1UsersUid200
+export type User = GetUserV1Uid200
 
 interface UserState {
   user: User | null
@@ -11,8 +11,8 @@ interface UserState {
 
 export const useUserStore = create<UserState>((set) => ({
   user: null,
-  
+
   setUser: (user) => set({ user }),
-  
+
   clearUser: () => set({ user: null })
-})) 
+}))

@@ -1,4 +1,4 @@
-import { getV1Notes } from "@yz13/api";
+import { getNotesV1 } from "@yz13/api";
 import { useEffect, useState } from "react";
 import { useNotesStore } from "../stores/notes-store";
 
@@ -17,7 +17,7 @@ export const useNotes = (workspaceId?: string): [Note[], boolean] => {
 
     setLoading(true);
     try {
-      const notesData = await getV1Notes({ workspaceId });
+      const notesData = await getNotesV1({ workspaceId });
       setNotes(workspaceId, notesData);
     } catch (error) {
       console.error(error);
@@ -46,7 +46,7 @@ export const useRefreshNotes = (workspaceId?: string) => {
 
     setLoading(true);
     try {
-      const notesData = await getV1Notes({ workspaceId });
+      const notesData = await getNotesV1({ workspaceId });
       setNotes(workspaceId, notesData);
     } catch (error) {
       console.error(error);

@@ -1,5 +1,5 @@
 import { useRefreshNotes } from "@/hooks/use-notes"
-import { deleteV1NotesNoteId } from "@yz13/api"
+import { deleteNotesV1NoteId } from "@yz13/api"
 import { Button } from "@yz13/ui/button"
 import { Loader2, Trash2Icon } from "lucide-react"
 import { useState } from "react"
@@ -15,7 +15,7 @@ export const DeleteButton = ({ noteId, workspaceId }: { noteId: string, workspac
   const remove = async () => {
     setLoading(true)
     try {
-      await deleteV1NotesNoteId(noteId);
+      await deleteNotesV1NoteId(noteId);
 
       refresh()
 
